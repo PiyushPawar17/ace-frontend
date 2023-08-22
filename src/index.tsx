@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import Root from './routes/root';
-import Tasks from './routes/tasks';
+import { Root, Tasks } from '@routes';
+import { AuthProvider } from '@utils/context';
 
 import reportWebVitals from './reportWebVitals';
 
@@ -23,7 +23,9 @@ const router = createBrowserRouter([
 
 root.render(
 	<React.StrictMode>
-		<RouterProvider router={router} />
+		<AuthProvider>
+			<RouterProvider router={router} />
+		</AuthProvider>
 	</React.StrictMode>
 );
 
