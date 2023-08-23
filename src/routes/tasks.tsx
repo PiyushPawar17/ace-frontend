@@ -1,26 +1,17 @@
-import { useAuth } from '@utils/context';
+import Navbar from '@components/Navbar';
+import List from '@components/List';
+import Tasks from '@components/Tasks';
 
-import '../App.css';
-
-function App() {
-	const { isLoggedIn } = useAuth();
-
+const TasksRoute = () => {
 	return (
-		<div className="App">
-			<header className="App-header">
-				Tasks Route
-				{isLoggedIn ? (
-					<a className="App-link" href="http://localhost:5000/auth/logout">
-						Logout
-					</a>
-				) : (
-					<a className="App-link" href="http://localhost:5000/auth/google/login">
-						Login
-					</a>
-				)}
-			</header>
-		</div>
+		<main>
+			<Navbar />
+			<section className="grid grid-cols-desktop gap-24 px-24 mt-12">
+				<List />
+				<Tasks />
+			</section>
+		</main>
 	);
-}
+};
 
-export default App;
+export default TasksRoute;

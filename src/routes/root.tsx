@@ -1,12 +1,13 @@
+import Navbar from '@components/Navbar';
+
 import { useAuth } from '@utils/context';
 
-import '../App.css';
-
-function App() {
+const RootRoute = () => {
 	const { isLoggedIn } = useAuth();
 
 	return (
-		<div className="App">
+		<main>
+			<Navbar />
 			<header className="App-header">
 				<p>
 					Edit <code>src/App.tsx</code> and save to reload.
@@ -24,8 +25,8 @@ function App() {
 					</a>
 				)}
 			</header>
-		</div>
+		</main>
 	);
-}
+};
 
-export default App;
+export default RootRoute;
