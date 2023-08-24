@@ -14,7 +14,7 @@ const TasksSection: React.FC<TasksSectionProps> = ({ title, tasks }) => {
 			{tasks.length > 0 ? (
 				<div className="flex flex-col gap-2">
 					{tasks.map(task => (
-						<Task key={task.id} />
+						<Task key={task.id} task={task} />
 					))}
 				</div>
 			) : (

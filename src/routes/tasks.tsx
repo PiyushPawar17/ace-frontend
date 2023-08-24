@@ -11,7 +11,7 @@ const TasksRoute = () => {
 		<main>
 			<Navbar />
 			<section className="grid grid-cols-desktop gap-24 px-24 mt-12">
-				<List setSelectedList={setSelectedList} />
+				<List selectedList={selectedList} setSelectedList={setSelectedList} />
 				<Tasks selectedList={selectedList} />
 			</section>
 		</main>
