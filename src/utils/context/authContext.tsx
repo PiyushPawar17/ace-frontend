@@ -44,9 +44,7 @@ export const AuthProvider: FunctionComponent<PropsWithChildren<{}>> = props => {
 	}, []);
 
 	const fetchUser = useCallback(() => {
-		return client<User>('/user/me', {
-			withCredentials: true
-		})
+		return client<User>('/user/me')
 			.then(response => {
 				setSession({
 					isLoading: false,

@@ -6,7 +6,9 @@
 			"@components/*": ["./src/components/*"],
 			"@styles/*": ["./src/styles/*"],
 			"@utils/*": ["./src/utils/*"],
-			"@assets/*": ["./src/assets/*"]
+			"@assets/*": ["./src/assets/*"],
+			"@handlers": ["./src/handlers/index"],
+			"@typings": ["./src/typings.d.ts"]
 		}
 	}
 }

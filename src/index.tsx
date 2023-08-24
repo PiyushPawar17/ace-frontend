@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { Root, Tasks } from '@routes';
 import { AuthProvider } from '@utils/context';
@@ -20,12 +21,15 @@ const router = createBrowserRouter([
 		element: <Tasks />
 	}
 ]);
+const queryClient = new QueryClient();
 
 root.render(
 	<React.StrictMode>
-		<AuthProvider>
-			<RouterProvider router={router} />
-		</AuthProvider>
+		<QueryClientProvider client={queryClient}>
+			<AuthProvider>
+				<RouterProvider router={router} />
+			</AuthProvider>
+		</QueryClientProvider>
 	</React.StrictMode>
 );
 

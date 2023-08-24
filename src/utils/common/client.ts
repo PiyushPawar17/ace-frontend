@@ -12,5 +12,5 @@ type Client = <T = any>(url: string, options?: AxiosRequestConfig) => Promise<Ax
  * @returns {Promise<AxiosResponse<T>>} Axios Response
  */
 export const client: Client = (url, options = {}) => {
-	return axios({ url: `${apiURL}${url}`, ...options });
+	return axios({ url: `${apiURL}${url}`, withCredentials: true, ...options });
 };

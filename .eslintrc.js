@@ -4,8 +4,10 @@ module.exports = {
 		'plugin:@typescript-eslint/recommended',
 		'plugin:react/recommended',
 		'plugin:react-hooks/recommended',
+		'plugin:@tanstack/eslint-plugin-query/recommended',
 		'prettier'
 	],
+	plugins: ['@tanstack/query'],
 	rules: {
 		'@typescript-eslint/ban-types': 'off',
 		'@typescript-eslint/indent': 'off',
@@ -58,7 +60,9 @@ module.exports = {
 		'react/no-unused-state': 'warn',
 		'react/react-in-jsx-scope': 'off',
 		'comma-spacing': ['warn', { before: false, after: true }],
-		'key-spacing': ['warn', { afterColon: true }]
+		'key-spacing': ['warn', { afterColon: true }],
+		'@tanstack/query/exhaustive-deps': 'error',
+		'@tanstack/query/prefer-query-object-syntax': 'error'
 	},
 	globals: {
 		React: 'writable'
