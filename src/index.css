@@ -14,3 +14,24 @@ body {
 .react-datepicker__close-icon::after {
 	@apply bg-blue;
 }
+
+.task-status::before {
+	display: inline-block;
+	content: '';
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	margin-right: 8px;
+}
+
+.task-status--todo.task-status::before {
+	background-color: #ffffff;
+}
+
+.task-status--progress.task-status::before {
+	background-color: #f7df1e;
+}
+
+.task-status--done.task-status::before {
+	background-color: #53d568;
+}

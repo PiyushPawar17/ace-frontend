@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, Transition } from '@headlessui/react';
@@ -62,12 +63,24 @@ const Task: React.FC<TaskProps> = ({ task }) => {
 				{task.dueDate && <p className="font-normal text-sm text-neutral-60">Due: {task.dueDate.getDate()}</p>}
 			</div>
 			<div className="flex flex-col justify-between gap-4">
-				<p className="text-xs border border-red px-3 py-2 rounded-full bg-red/30 self-end text-red capitalize">
+				<p
+					className={`
+						text-xs border  px-3 py-2 rounded-full self-end  capitalize
+						${
+							/* prettier-ignore */
+							task.priority === 'HIGH'
+								? 'border-red bg-red/30 text-red'
+								: task.priority === 'MEDIUM'
+									? 'border-yellow bg-yellow/30 text-yellow'
+									: 'border-white bg-white/30 text-white'
+						}
+					`}
+				>
 					{task.priority.toLowerCase()}
 				</p>
 				<div className="flex gap-2">
 					<Link
-						to={`/task/edit/${task.id}`}
+						to={`/task/${task.listId}/edit/${task.id}`}
 						className="rounded px-4 py-2 text-sm border border-blue text-blue flex items-center gap-1"
 					>
 						<span>Edit</span>

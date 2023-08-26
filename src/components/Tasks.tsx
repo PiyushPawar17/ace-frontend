@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import TasksSection from '@components/TasksSection';
 
@@ -28,8 +28,13 @@ const Tasks = () => {
 
 	return (
 		<section>
-			<h1 className="font-semibold text-3xl mb-6">{list.name}&apos;s Tasks</h1>
-			<section className="flex flex-col gap-10">
+			<h1 className="font-semibold text-3xl mb-6 flex justify-between items-center">
+				<span>{list.name}&apos;s Tasks</span>
+				<Link to={`/tasks/${listId}/new`} className="text-sm bg-blue px-4 py-2 rounded font-normal">
+					+ Create a new task
+				</Link>
+			</h1>
+			<section className="flex flex-col gap-10 mb-10">
 				<TasksSection title="In Progress" tasks={inProgressTasks} />
 				<TasksSection title="Todo" tasks={todoTasks} />
 				<TasksSection title="Completed" tasks={completedTasks} />

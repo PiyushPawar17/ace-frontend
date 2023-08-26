@@ -1,7 +1,7 @@
 import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate, useMatches } from 'react-router-dom';
 
 import { useAuth } from '@utils/context';
 import { getUserList, createList } from '@handlers';
@@ -11,8 +11,10 @@ const List = () => {
 	const [newListName, setNewListName] = useState('');
 	const { isLoggedIn, user } = useAuth();
 	const queryClient = useQueryClient();
-	const { listId, taskId } = useParams();
+	const { listId } = useParams();
 	const navigate = useNavigate();
+	const [matches] = useMatches();
+	console.log(matches);
 
 	const closeModal = () => {
 		setNewListName('');
@@ -27,7 +29,7 @@ const List = () => {
 		queryKey: ['lists', user?.id],
 		queryFn: getUserList,
 		onSuccess: lists => {
-			if (!listId && !taskId) {
+			if (matches.pathname === '/tasks') {
 				navigate(`/tasks/${lists[0].id}`);
 			}
 		},

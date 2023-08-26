@@ -8,7 +8,8 @@ module.exports = {
 				'neutral-80': '#222330',
 				'neutral-60': '#7F8190',
 				blue: '#0097E8',
-				red: '#EA4452'
+				red: '#EA4452',
+				yellow: '#F7DF1E'
 			},
 			gridTemplateColumns: {
 				desktop: 'minmax(324px, auto) minmax(0, 1fr)'

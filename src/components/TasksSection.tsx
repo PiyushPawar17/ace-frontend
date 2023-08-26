@@ -10,7 +10,18 @@ interface TasksSectionProps {
 const TasksSection: React.FC<TasksSectionProps> = ({ title, tasks }) => {
 	return (
 		<div>
-			<h3 className="font-semibold text-xl mb-2">{title}</h3>
+			<h3
+				className={`font-semibold text-xl mb-2 flex items-center task-status ${
+					/* prettier-ignore */
+					title === 'Todo'
+						? 'task-status--todo'
+						: title === 'Completed'
+							? 'task-status--done'
+							: 'task-status--progress'
+				}`}
+			>
+				{title}
+			</h3>
 			{tasks.length > 0 ? (
 				<div className="flex flex-col gap-2">
 					{tasks.map(task => (

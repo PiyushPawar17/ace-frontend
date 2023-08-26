@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Root from '@routes/root';
 import Tasks from '@routes/tasks/index';
 import EditTask from '@routes/tasks/edit';
+import NewTask from '@routes/tasks/new';
 
 import { AuthProvider } from '@utils/context';
 
@@ -29,7 +30,11 @@ const router = createBrowserRouter([
 		element: <Tasks />
 	},
 	{
-		path: '/task/edit/:taskId',
+		path: '/tasks/:listId/new',
+		element: <NewTask />
+	},
+	{
+		path: '/task/:listId/edit/:taskId',
 		element: <EditTask />
 	}
 ]);

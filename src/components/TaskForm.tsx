@@ -1,10 +1,10 @@
 import React, { useState, forwardRef } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { RadioGroup } from '@headlessui/react';
 import DatePicker from 'react-datepicker';
 
-import { updateTask } from '@handlers';
+import { createTask, updateTask } from '@handlers';
 
 import { Status, Priority } from '@typings';
 
@@ -43,7 +43,7 @@ interface EditTaskFormProps {
 
 interface CreateTaskFormProps {
 	mode: 'create';
-	task: undefined;
+	task?: undefined;
 }
 
 const TaskForm: React.FC<EditTaskFormProps | CreateTaskFormProps> = ({ mode, task }) => {
@@ -55,37 +55,65 @@ const TaskForm: React.FC<EditTaskFormProps | CreateTaskFormProps> = ({ mode, tas
 
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
+	const { listId } = useParams();
 
-	const { mutate } = useMutation({
+	const { mutate: updateTaskMutation } = useMutation({
 		mutationKey: ['update-task', task?.id],
 		mutationFn: updateTask,
 		onSuccess: () => {
-			queryClient.invalidateQueries(['list', task?.listId]);
+			queryClient.invalidateQueries(['list', listId]);
 			queryClient.invalidateQueries(['task', task?.id]);
 
-			navigate('/tasks');
+			navigate(`/tasks/${listId}`);
 		}
 	});
 
-	const updateTaskMutation = (e: React.FormEvent<HTMLFormElement>) => {
+	const { mutate: createTaskMutation } = useMutation({
+		mutationKey: ['create-task', listId],
+		mutationFn: createTask,
+		onSuccess: () => {
+			queryClient.invalidateQueries(['list', listId]);
+
+			navigate(`/tasks/${listId}`);
+		}
+	});
+
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		mutate({
-			taskId: task!.id,
-			task: {
-				title,
-				description,
-				status,
-				priority,
-				dueDate: dueDate ? dueDate : undefined
+		if (mode === 'edit') {
+			updateTaskMutation({
+				taskId: task!.id,
+				task: {
+					title,
+					description,
+					status,
+					priority,
+					dueDate: dueDate ? dueDate : undefined
+				}
+			});
+		} else {
+			if (!listId) {
+				return;
 			}
-		});
+
+			createTaskMutation({
+				listId,
+				task: {
+					title,
+					description,
+					status,
+					priority,
+					dueDate: dueDate ? dueDate : undefined
+				}
+			});
+		}
 	};
 
 	return (
-		<section>
+		<section className="mb-10">
 			<h2 className="text-xl font-bold">{mode === 'edit' ? 'Edit task' : 'Create a new task'}</h2>
-			<form className="mt-4 flex flex-col gap-8" onSubmit={updateTaskMutation}>
+			<form className="mt-4 flex flex-col gap-8" onSubmit={handleSubmit}>
 				<div>
 					<label htmlFor="title" className="block mb-1 text-sm">
 						Title
@@ -150,9 +178,18 @@ const TaskForm: React.FC<EditTaskFormProps | CreateTaskFormProps> = ({ mode, tas
 						isClearable
 					/>
 				</div>
-				<button className="bg-blue rounded px-4 py-2 mt-4 self-start">
-					{mode === 'edit' ? 'Update task' : 'Create task'}
-				</button>
+				<div className="flex gap-2">
+					<button className="bg-blue rounded px-4 py-2 mt-4 self-start">
+						{mode === 'edit' ? 'Update task' : 'Create task'}
+					</button>
+					<button
+						className="border border-blue rounded px-4 py-2 mt-4 self-start text-blue"
+						type="button"
+						onClick={() => void navigate(-1)}
+					>
+						Cancel
+					</button>
+				</div>
 			</form>
 		</section>
 	);
