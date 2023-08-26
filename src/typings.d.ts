@@ -19,6 +19,7 @@ export interface Task {
 	dueDate: Date;
 	status: Status;
 	priority: Priority;
+	listId: string;
 }
 
 type Status = 'TODO' | 'IN_PROGRESS' | 'DONE';

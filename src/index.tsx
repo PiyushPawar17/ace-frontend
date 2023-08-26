@@ -3,11 +3,15 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { Root, Tasks } from '@routes';
+import Root from '@routes/root';
+import Tasks from '@routes/tasks/index';
+import EditTask from '@routes/tasks/edit';
+
 import { AuthProvider } from '@utils/context';
 
 import reportWebVitals from './reportWebVitals';
 
+import 'react-datepicker/dist/react-datepicker.css';
 import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
@@ -19,6 +23,14 @@ const router = createBrowserRouter([
 	{
 		path: '/tasks',
 		element: <Tasks />
+	},
+	{
+		path: '/tasks/:listId',
+		element: <Tasks />
+	},
+	{
+		path: '/task/edit/:taskId',
+		element: <EditTask />
 	}
 ]);
 const queryClient = new QueryClient();

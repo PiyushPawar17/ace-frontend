@@ -6,3 +6,11 @@ body {
 	font-family: 'Poppins', sans-serif;
 	@apply bg-neutral-100 text-white;
 }
+
+.react-datepicker__close-icon {
+	@apply pr-2;
+}
+
+.react-datepicker__close-icon::after {
+	@apply bg-blue;
+}

@@ -1,18 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'react-router-dom';
 
 import TasksSection from '@components/TasksSection';
 
 import { getList } from '@handlers';
 
-interface TasksProps {
-	selectedList: string | null;
-}
+const Tasks = () => {
+	const { listId } = useParams();
 
-const Tasks: React.FC<TasksProps> = ({ selectedList }) => {
 	const { data: list, isLoading } = useQuery({
-		queryKey: ['list', selectedList],
-		queryFn: () => getList({ listId: selectedList as string }),
-		enabled: !!selectedList
+		queryKey: ['list', listId],
+		queryFn: () => getList({ listId: listId as string }),
+		enabled: !!listId
 	});
 
 	if (isLoading) {

@@ -1,20 +1,18 @@
 import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 
 import { useAuth } from '@utils/context';
 import { getUserList, createList } from '@handlers';
 
-interface ListProps {
-	selectedList: string | null;
-	setSelectedList: React.Dispatch<React.SetStateAction<string | null>>;
-}
-
-const List: React.FC<ListProps> = ({ selectedList, setSelectedList }) => {
+const List = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [newListName, setNewListName] = useState('');
 	const { isLoggedIn, user } = useAuth();
 	const queryClient = useQueryClient();
+	const { listId, taskId } = useParams();
+	const navigate = useNavigate();
 
 	const closeModal = () => {
 		setNewListName('');
@@ -29,13 +27,15 @@ const List: React.FC<ListProps> = ({ selectedList, setSelectedList }) => {
 		queryKey: ['lists', user?.id],
 		queryFn: getUserList,
 		onSuccess: lists => {
-			setSelectedList(lists[0].id);
+			if (!listId && !taskId) {
+				navigate(`/tasks/${lists[0].id}`);
+			}
 		},
 		enabled: isLoggedIn
 	});
 
 	const { mutate } = useMutation({
-		mutationKey: ['new-list', user?.id],
+		mutationKey: ['new-list'],
 		mutationFn: createList,
 		onSuccess: () => {
 			closeModal();
@@ -58,12 +58,11 @@ const List: React.FC<ListProps> = ({ selectedList, setSelectedList }) => {
 						lists?.map(list => (
 							<li
 								key={list.id}
-								className={`${
-									selectedList === list.id ? 'bg-blue' : ''
-								}  text-base py-3 px-6 cursor-pointer`}
-								onClick={() => setSelectedList(list.id)}
+								className={`${listId === list.id ? 'bg-blue' : ''} text-base py-3 px-6 cursor-pointer`}
 							>
-								{list.name}
+								<Link to={`/tasks/${list.id}`} className="block">
+									{list.name}
+								</Link>
 							</li>
 						))
 					)}
