@@ -10,16 +10,12 @@ import {
 
 import { client } from '@utils/common';
 
-type User = {
-	id: string;
-	name: string;
-	email: string;
-};
+import { User } from '@typings';
 
 type AuthContextType = {
 	isLoading: boolean;
 	isLoggedIn: boolean;
-	user: User | null;
+	user: Omit<User, 'lists'> | null;
 	fetchUser: () => void;
 };
 
