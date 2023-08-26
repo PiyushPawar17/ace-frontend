@@ -6,8 +6,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { updateTask } from '@handlers';
 
-import downArrow from '@assets/chevron-down.svg';
-import edit from '@assets/edit.svg';
+import downArrow from '@assets/icons/chevron-down.svg';
+import edit from '@assets/icons/edit.svg';
 
 import { Task as TaskTypes, Status } from '@typings';
 
