@@ -177,7 +177,7 @@ const TaskForm: React.FC<EditTaskFormProps | CreateTaskFormProps> = ({ mode, tas
 				<div>
 					<label className="mb-2 block text-sm">Due Date</label>
 					<DatePicker
-						selected={mode === 'edit' ? (dueDate ? new Date(dueDate!) : null) : undefined}
+						selected={dueDate ? new Date(dueDate!) : undefined}
 						onChange={date => setDueDate(date)}
 						customInput={<DatePickerInput />}
 						dateFormat="dd/MM/yyyy"
