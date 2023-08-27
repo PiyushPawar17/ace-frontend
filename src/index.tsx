@@ -2,13 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { CookiesProvider } from 'react-cookie';
 
 import Root from '@routes/root';
 import Tasks from '@routes/tasks/index';
 import EditTask from '@routes/tasks/edit';
 import NewTask from '@routes/tasks/new';
-import Auth from '@routes/auth';
 
 import { AuthProvider } from '@utils/context';
 
@@ -22,10 +20,6 @@ const router = createBrowserRouter([
 	{
 		path: '/',
 		element: <Root />
-	},
-	{
-		path: '/auth',
-		element: <Auth />
 	},
 	{
 		path: '/tasks',
@@ -48,13 +42,11 @@ const queryClient = new QueryClient();
 
 root.render(
 	<React.StrictMode>
-		<CookiesProvider>
-			<QueryClientProvider client={queryClient}>
-				<AuthProvider>
-					<RouterProvider router={router} />
-				</AuthProvider>
-			</QueryClientProvider>
-		</CookiesProvider>
+		<QueryClientProvider client={queryClient}>
+			<AuthProvider>
+				<RouterProvider router={router} />
+			</AuthProvider>
+		</QueryClientProvider>
 	</React.StrictMode>
 );
 
