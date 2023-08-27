@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import Layout from '@components/Layout';
 import Navbar from '@components/Navbar';
 
 import { useAuth } from '@utils/context';
@@ -11,14 +13,17 @@ const RootRoute = () => {
 	const navigate = useNavigate();
 	const { isLoggedIn } = useAuth();
 
-	if (isLoggedIn) {
-		navigate('/tasks');
-	}
+	useEffect(() => {
+		if (isLoggedIn) {
+			navigate('/tasks');
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isLoggedIn]);
 
 	return (
 		<main>
 			<Navbar />
-			<section className="xl:max-w-6xl lg:max-w-4xl md:max-w-2xl sm:max-w-lg max-w-xs mx-auto pb-20 px-4 sm:px-0">
+			<Layout className="pb-20">
 				<h1 className="text-center font-bold">
 					<span className="block sm:text-3xl lg:text-6xl md:text-4xl text-2xl">Manage your tasks</span>
 					<span className="block sm:text-4xl lg:text-6xl md:text-4xl text-2xl">
@@ -73,7 +78,7 @@ const RootRoute = () => {
 						Login to get started
 					</a>
 				</section>
-			</section>
+			</Layout>
 		</main>
 	);
 };

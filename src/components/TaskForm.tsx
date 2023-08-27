@@ -139,11 +139,13 @@ const TaskForm: React.FC<EditTaskFormProps | CreateTaskFormProps> = ({ mode, tas
 				<div>
 					<RadioGroup value={status} onChange={setStatus}>
 						<RadioGroup.Label className="mb-2 block text-sm">Status</RadioGroup.Label>
-						<div className="flex">
+						<div className="flex sm:flex-row flex-col gap-4 sm:gap-0 items-start">
 							{statuses.map(status => (
 								<RadioGroup.Option key={status.status} value={status.status} as="button" type="button">
 									{({ checked }) => (
-										<span className={`${checked ? 'bg-blue' : ''} px-4 py-2 rounded`}>
+										<span
+											className={`${checked ? 'bg-blue px-4 py-2' : ''} sm:px-4 sm:py-2 rounded`}
+										>
 											{status.title}
 										</span>
 									)}
@@ -155,11 +157,15 @@ const TaskForm: React.FC<EditTaskFormProps | CreateTaskFormProps> = ({ mode, tas
 				<div>
 					<RadioGroup value={priority} onChange={setPriority}>
 						<RadioGroup.Label className="mb-2 block text-sm">Priority</RadioGroup.Label>
-						<div className="flex">
+						<div className="flex sm:flex-row flex-col gap-4 sm:gap-0 items-start">
 							{priorities.map(priority => (
 								<RadioGroup.Option key={priority} value={priority} as="button" type="button">
 									{({ checked }) => (
-										<span className={`${checked ? 'bg-blue' : ''} px-4 py-2 rounded capitalize`}>
+										<span
+											className={`${
+												checked ? 'bg-blue px-4 py-2' : ''
+											} sm:px-4 sm:py-2 rounded capitalize`}
+										>
 											{priority.toLowerCase()}
 										</span>
 									)}
@@ -179,11 +185,11 @@ const TaskForm: React.FC<EditTaskFormProps | CreateTaskFormProps> = ({ mode, tas
 					/>
 				</div>
 				<div className="flex gap-2">
-					<button className="bg-blue rounded px-4 py-2 mt-4 self-start">
+					<button className="bg-blue rounded px-4 py-2 mt-4 sm:text-base text-sm self-start">
 						{mode === 'edit' ? 'Update task' : 'Create task'}
 					</button>
 					<button
-						className="border border-blue rounded px-4 py-2 mt-4 self-start text-blue"
+						className="border border-blue rounded px-4 py-2 mt-4 sm:text-base text-sm self-start text-blue"
 						type="button"
 						onClick={() => void navigate(-1)}
 					>
@@ -197,7 +203,12 @@ const TaskForm: React.FC<EditTaskFormProps | CreateTaskFormProps> = ({ mode, tas
 
 const DatePickerInput = forwardRef<HTMLButtonElement, React.HTMLProps<HTMLButtonElement>>(({ value, onClick }, ref) => {
 	return (
-		<button className="w-36 text-left bg-neutral-700 rounded px-4 py-2" onClick={onClick} ref={ref} type="button">
+		<button
+			className="w-32 sm:w-36 text-left bg-neutral-700 rounded px-4 py-2 sm:text-base text-sm"
+			onClick={onClick}
+			ref={ref}
+			type="button"
+		>
 			{!value ? 'Select a date' : value}
 		</button>
 	);

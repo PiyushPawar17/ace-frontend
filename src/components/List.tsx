@@ -6,7 +6,11 @@ import { Link, useParams, useNavigate, useMatches } from 'react-router-dom';
 import { useAuth } from '@utils/context';
 import { getUserList, createList } from '@handlers';
 
-const List = () => {
+interface ListProps {
+	className?: string;
+}
+
+const List: React.FC<ListProps> = ({ className }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [newListName, setNewListName] = useState('');
 	const { isLoggedIn, user } = useAuth();
@@ -14,7 +18,6 @@ const List = () => {
 	const { listId } = useParams();
 	const navigate = useNavigate();
 	const [matches] = useMatches();
-	console.log(matches);
 
 	const closeModal = () => {
 		setNewListName('');
@@ -50,9 +53,9 @@ const List = () => {
 	};
 
 	return (
-		<section>
+		<section className={className}>
 			<section className="rounded bg-neutral-80">
-				<h3 className="p-6 font-semibold text-xl">Your Lists</h3>
+				<h3 className="p-6 font-semibold text-lg sm:text-xl">Your Lists</h3>
 				<ul className="mb-3">
 					{isLoading ? (
 						<div className="py-3 px-6">Loading</div>
@@ -60,7 +63,9 @@ const List = () => {
 						lists?.map(list => (
 							<li
 								key={list.id}
-								className={`${listId === list.id ? 'bg-blue' : ''} text-base py-3 px-6 cursor-pointer`}
+								className={`${
+									listId === list.id ? 'bg-blue' : ''
+								} text-sm sm:text-base py-3 px-6 cursor-pointer`}
 							>
 								<Link to={`/tasks/${list.id}`} className="block">
 									{list.name}
@@ -105,7 +110,7 @@ const List = () => {
 								leaveTo="opacity-0 scale-95"
 							>
 								<Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-neutral-80 p-6 text-left align-middle shadow-xl transition-all">
-									<Dialog.Title as="h3" className="text-lg font-medium leading-6">
+									<Dialog.Title as="h3" className="text-base sm:text-lg font-medium leading-6">
 										Add A New List
 									</Dialog.Title>
 									<form onSubmit={addNewList}>

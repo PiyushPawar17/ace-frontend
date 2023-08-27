@@ -12,7 +12,8 @@ module.exports = {
 				yellow: '#F7DF1E'
 			},
 			gridTemplateColumns: {
-				desktop: 'minmax(324px, auto) minmax(0, 1fr)'
+				desktop: 'minmax(324px, auto) minmax(0, 1fr)',
+				tablet: 'minmax(286px, auto) minmax(0, 1fr)'
 			}
 		}
 	},

@@ -11,7 +11,7 @@ const TasksSection: React.FC<TasksSectionProps> = ({ title, tasks }) => {
 	return (
 		<div>
 			<h3
-				className={`font-semibold text-xl mb-2 flex items-center task-status ${
+				className={`font-semibold text-base lg:text-xl mb-2 flex items-center task-status ${
 					/* prettier-ignore */
 					title === 'Todo'
 						? 'task-status--todo'

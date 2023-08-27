@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
+import Layout from '@components/Layout';
 import Navbar from '@components/Navbar';
 import List from '@components/List';
 import TaskForm from '@components/TaskForm';
@@ -19,10 +20,13 @@ const EditTasksRoute = () => {
 	return (
 		<main>
 			<Navbar />
-			<section className="grid grid-cols-desktop gap-24 px-24 mt-12">
-				<List />
-				{!task ? <div>Loading...</div> : <TaskForm mode="edit" task={task} />}
-			</section>
+
+			<Layout>
+				<section className="grid xl:grid-cols-desktop lg:grid-cols-tablet gap-16 mt-12">
+					<List className="hidden lg:block" />
+					{!task ? <div>Loading...</div> : <TaskForm mode="edit" task={task} />}
+				</section>
+			</Layout>
 		</main>
 	);
 };

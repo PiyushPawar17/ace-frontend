@@ -28,9 +28,9 @@ const Tasks = () => {
 
 	return (
 		<section>
-			<h1 className="font-semibold text-3xl mb-6 flex justify-between items-center">
+			<h1 className="font-semibold text-xl sm:text-2xl lg:text-3xl mb-6 flex flex-col gap-2 sm:flex-row justify-between sm:items-center">
 				<span>{list.name}&apos;s Tasks</span>
-				<Link to={`/tasks/${listId}/new`} className="text-sm bg-blue px-4 py-2 rounded font-normal">
+				<Link to={`/tasks/${listId}/new`} className="text-sm bg-blue px-4 py-2 rounded font-normal self-start">
 					+ Create a new task
 				</Link>
 			</h1>
