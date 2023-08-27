@@ -40,8 +40,6 @@ export const AuthProvider: FunctionComponent<PropsWithChildren<{}>> = props => {
 	}, []);
 
 	const fetchUser = useCallback(async () => {
-		await client('/auth/cookie');
-
 		return client<User>('/user/me', {
 			withCredentials: true
 		})

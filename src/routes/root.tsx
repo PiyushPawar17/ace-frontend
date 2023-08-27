@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import Layout from '@components/Layout';
 import Navbar from '@components/Navbar';
@@ -12,8 +12,11 @@ import tasks from '@assets/screenshots/tasks.svg';
 const RootRoute = () => {
 	const navigate = useNavigate();
 	const { isLoggedIn } = useAuth();
+	const [searchParams] = useSearchParams();
 
 	useEffect(() => {
+		console.log(searchParams);
+
 		if (isLoggedIn) {
 			navigate('/tasks');
 		}
