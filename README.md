@@ -16,4 +16,6 @@ yarn
 yarn start
 ```
 
+-   Screenshots and demo can be found in the `/screenshots` folder
+
 _Note: The frontend is deployed at https://ace-frontend.vercel.app/, but has issues authenticating_
