@@ -3,11 +3,13 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, Transition } from '@headlessui/react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { format } from 'date-fns';
 
-import { updateTask } from '@handlers';
+import { updateTask, deleteTask } from '@handlers';
 
 import downArrow from '@assets/icons/chevron-down.svg';
 import edit from '@assets/icons/edit.svg';
+import trash from '@assets/icons/trash.svg';
 
 import { Task as TaskTypes, Status } from '@typings';
 
@@ -44,6 +46,14 @@ const Task: React.FC<TaskProps> = ({ task }) => {
 		}
 	});
 
+	const { mutate: deleteTaskMutation } = useMutation({
+		mutationKey: ['delete-task', task.id],
+		mutationFn: deleteTask,
+		onSuccess: () => {
+			queryClient.invalidateQueries(['list', task.listId]);
+		}
+	});
+
 	const updateStatus = (status: Status) => {
 		mutate({
 			taskId: task.id,
@@ -53,6 +63,10 @@ const Task: React.FC<TaskProps> = ({ task }) => {
 		});
 	};
 
+	const onDelete = () => {
+		deleteTaskMutation({ taskId: task.id });
+	};
+
 	return (
 		<div className="bg-neutral-80 rounded px-8 py-5 flex flex-col sm:flex-row gap-4 justify-between">
 			<div className="flex flex-col gap-4 justify-between">
@@ -60,11 +74,16 @@ const Task: React.FC<TaskProps> = ({ task }) => {
 					<h4 className="text-base font-semibold mb-2">{task.title}</h4>
 					<p className="font-normal text-sm">{task.description}</p>
 				</div>
-				{task.dueDate && <p className="font-normal text-sm text-neutral-60">Due: {task.dueDate.getDate()}</p>}
+				{task.dueDate && (
+					<p className="font-normal text-sm text-neutral-60">
+						Due: {format(new Date(task.dueDate), 'dd/MM/yyyy')}
+					</p>
+				)}
 			</div>
 			<div className="flex flex-col justify-between gap-4">
-				<p
-					className={`
+				<div className="self-start sm:self-end flex gap-2 ml-auto sm:ml-0">
+					<p
+						className={`
 						text-xs border px-2 py-1 sm:px-3 sm:py-2 rounded-full self-start sm:self-end capitalize
 						${
 							/* prettier-ignore */
@@ -75,9 +94,13 @@ const Task: React.FC<TaskProps> = ({ task }) => {
 									: 'border-white bg-white/30 text-white'
 						}
 					`}
-				>
-					{task.priority.toLowerCase()}
-				</p>
+					>
+						{task.priority.toLowerCase()}
+					</p>
+					<button onClick={onDelete}>
+						<img src={trash} alt="Delete Icon" className="w-4" />
+					</button>
+				</div>
 				<div className="flex gap-2 ml-auto sm:ml-0">
 					<Link
 						to={`/task/${task.listId}/edit/${task.id}`}
@@ -86,7 +109,6 @@ const Task: React.FC<TaskProps> = ({ task }) => {
 						<span>Edit</span>
 						<img src={edit} alt="Edit Icon" className="w-3 lg:w-4" />
 					</Link>
-
 					<Menu as="div" className="relative isolate">
 						<Menu.Button className="bg-blue px-2 py-2 sm:px-3 lg:px-4 text-xs sm:text-sm rounded flex gap-1 items-center">
 							<span>Move to</span>

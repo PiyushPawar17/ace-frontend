@@ -27,3 +27,9 @@ export const updateTask = ({ taskId, task }: { taskId: string; task: Partial<Omi
 		data: task
 	});
 };
+
+export const deleteTask = ({ taskId }: { taskId: string }) => {
+	return client(`/task/${taskId}`, {
+		method: 'DELETE'
+	});
+};
